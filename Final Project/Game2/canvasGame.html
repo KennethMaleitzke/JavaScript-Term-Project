@@ -4,9 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <link href="css/canvasGame.css" rel="stylesheet">
-<title>Spy Work</title> 
+<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
+<title>Spy</title> 
 </head>
 <body onload="startGame()">
+    <a href="../readme.txt">Read Me!</a>
 <script>
 
 var myGameObject;
@@ -15,8 +17,8 @@ var score;
 
 function startGame() {
     myGameArea.startGame();
-    myGameObject = new component(30, 30, "black", 10, 120);
-    score = new component("30px", "Consolas", "black", 280, 40, "text");
+    myGameObject = new component(30, 40, "media/spy2small.png", 10, 120, "image");
+    score = new component("30px", "VT323", "green", 280, 40, "text");
 }
 
 var myGameArea = {
@@ -39,6 +41,10 @@ var myGameArea = {
 
 function component(width, height, color, x, y, type) {
     this.type = type;
+    if (type == "image") {
+        this.image = new Image();
+        this.image.src = color;
+    }
     this.width = width;
     this.height = height;
     this.speedX = 0;
@@ -51,7 +57,14 @@ function component(width, height, color, x, y, type) {
             ctx.font = this.width + " " + this.height;
             ctx.fillStyle = color;
             ctx.fillText(this.text, this.x, this.y);
-        }else{
+        }
+        else if (type == "image") {
+            ctx.drawImage(this.image, 
+                this.x, 
+                this.y,
+                this.width, this.height);
+        }  
+        else{
             ctx.fillStyle = color;
             ctx.fillRect(this.x, this.y, this.width, this.height);
         }
